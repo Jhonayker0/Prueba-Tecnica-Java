@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.library_manager.exception.BookNotAvailableException;
 import com.example.library_manager.exception.BookNotFoundException;
+import com.example.library_manager.exception.DuplicateIsbnException;
 import com.example.library_manager.model.Book;
 import com.example.library_manager.model.BookStatus;
 import com.example.library_manager.model.Loan;
@@ -36,7 +37,7 @@ public class LibraryService {
         // Establecer status = AVAILABLE
         // Guardar y retornar
         if (bookRepository.findByIsbn(book.getIsbn()).isPresent()) {
-            throw new IllegalArgumentException("ISBN must be unique");
+            throw new DuplicateIsbnException(book.getIsbn());
         }
         book.setCreatedAt(LocalDateTime.now());
         book.setStatus(BookStatus.AVAILABLE);
