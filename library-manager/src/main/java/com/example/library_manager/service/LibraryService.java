@@ -119,4 +119,21 @@ public class LibraryService {
         stats.put("overdueLoans", loanRepository.findOverdueLoans().size());
         return stats;
     }
+
+    public void deleteBook(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(id));
+        if (book.getStatus() != BookStatus.AVAILABLE) {
+            throw new BookNotAvailableException(book.getIsbn());
+        }
+        bookRepository.delete(book);
+    }
+
+    public List<Loan> getOverdueLoans() {
+        return loanRepository.findOverdueLoans();
+    }
+
+    public List<Loan> getActiveLoans() {
+        return loanRepository.findByReturnDateIsNull();
+    }
 }
