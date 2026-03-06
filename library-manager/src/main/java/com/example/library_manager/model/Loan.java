@@ -3,6 +3,7 @@ package com.example.library_manager.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity 
 @Table(name = "loans") 
@@ -34,9 +35,9 @@ public class Loan {
     private String borrowerEmail;
 
     @NotNull
-    private LocalDate loanDate = LocalDate.now();
+    private LocalDate loanDate;
 
-    private LocalDate dueDate = loanDate.plusDays(14);
+    private LocalDate dueDate;
 
     private LocalDate returnDate;
 
